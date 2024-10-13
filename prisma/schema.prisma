@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  password  String   
+  servers   Server[] @relation("UserServers")  
+  joinedServers Server[] @relation("JoinedServers") 
+}
+
+model Server {
+  id        Int      @id @default(autoincrement())
+  name      String
+  ownerId   Int
+  owner     User     @relation("UserServers", fields: [ownerId], references: [id])
+  members   User[]   @relation("JoinedServers") 
+  voiceChannels VoiceChannel[] @relation("ServerVoiceChannels") 
+  createdAt DateTime @default(now())
+}
+
+model VoiceChannel {
+  id        Int      @id @default(autoincrement())
+  name      String
+  serverId  Int
+  server    Server   @relation("ServerVoiceChannels", fields: [serverId], references: [id])
+}
+

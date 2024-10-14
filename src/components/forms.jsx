@@ -85,7 +85,7 @@ export const RegistrationForm = (props) => {
 
 
 // TODO закончить логаут
-export const LogOutForm = () => {
+export const LogOutForm = (props) => {
 
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -95,7 +95,7 @@ export const LogOutForm = () => {
 
 	const handleLogout = async (event) => {
 		event.preventDefault();
-		setLoading(true); // Set loading to true
+		setLoading(true);
 
 		try {
 			await signOut();
@@ -103,7 +103,7 @@ export const LogOutForm = () => {
 		} catch (err) {
 			setError(err.message || "An error occurred while logging out.");
 		} finally {
-			setLoading(false); // Reset loading state
+			setLoading(false); 
 		}
 	};
 

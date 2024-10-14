@@ -1,4 +1,3 @@
-"use server"
 
 import {Button} from "@/components/ui/buttons"
 import Session from "@/utils/session"

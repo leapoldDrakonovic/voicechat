@@ -1,13 +1,16 @@
 "use client"
 
-import { signUp, signIn } from "@/app/(auth)/actions/actions"
+import { signUp, signIn, signOut } from "@/app/(auth)/actions/actions"
 import { Input } from "@/components/ui/input"
 import { SubmitButton } from "@/components/ui/buttons"
 import { useState } from "react"
+import Session from "@/utils/session"
+import { redirect } from "next/navigation";
+
 
 export const LoginForm = (props) => {
 
-	
+
 	const [error, setError] = useState('');
 
 	const handleSubmit = async (event) => {
@@ -17,7 +20,7 @@ export const LoginForm = (props) => {
 		try {
 			await signIn(formData);
 		} catch (err) {
-			setError(err.message); 
+			setError(err.message);
 		}
 	};
 
@@ -51,7 +54,7 @@ export const RegistrationForm = (props) => {
 		try {
 			await signUp(formData);
 		} catch (err) {
-			setError(err.message); 
+			setError(err.message);
 		}
 	};
 
@@ -76,4 +79,42 @@ export const RegistrationForm = (props) => {
 			<SubmitButton type="submit">Sing Up</SubmitButton>
 		</form>
 	)
+}
+
+
+
+
+// TODO закончить логаут
+export const LogOutForm = () => {
+
+	const [error, setError] = useState('');
+	const [loading, setLoading] = useState(false);
+
+	const session = new Session("session")
+
+
+	const handleLogout = async (event) => {
+		event.preventDefault();
+		setLoading(true); // Set loading to true
+
+		try {
+			await signOut();
+			session.clear();
+		} catch (err) {
+			setError(err.message || "An error occurred while logging out.");
+		} finally {
+			setLoading(false); // Reset loading state
+		}
+	};
+
+
+	return (
+
+		<form onSubmit={handleLogout}>
+			<SubmitButton type="submit" disabled={loading}>
+				{loading ? 'Logging Out...' : 'Log Out'}
+			</SubmitButton>
+		</form>
+	)
+
 }

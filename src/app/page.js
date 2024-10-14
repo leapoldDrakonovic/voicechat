@@ -6,8 +6,11 @@ import { Button } from "@/components/ui/buttons";
 import { Input } from "@/components/ui/input";
 import { ServerUsersList } from "@/components/user";
 import { useState } from "react";
+import Header from "@/components/header"
+
 
 const ServersList = () => {
+
   return (
     <>
     <ul className="flex flex-row gap-5 h-full w-full flex-wrap justify-around">
@@ -33,6 +36,7 @@ export default function Home() {
 
   return (
     <>
+     <Header/>
      <div className=" relative flex flex-row items-start justify-center m-auto h-screen overflow-hidden gap-4 mt-4">
       {/* Modal for create server */}
 

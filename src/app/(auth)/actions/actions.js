@@ -3,10 +3,13 @@ import { prisma } from "@/lib/prisma"
 import bcrypt from "bcrypt"
 import { cookies } from 'next/headers';
 import { redirect } from "next/navigation";
+import Session from "@/utils/session"
 
 export const signOut = async() => {
-	// todo
-	// clear session
+	const session = new Session("session")
+	session.clearSession()
+
+	return redirect('/sing-in')
 }
 
 
@@ -31,16 +34,9 @@ export const signIn = async (formData) => {
 
 	// todo
 	// finish work with session 
-	const cookieStore = cookies();
-	cookieStore.set({
-		name: 'session',
-		value: User.id,  
-		httpOnly: true, 
-		path: '/',
-		maxAge: 60 * 60 * 24,  
-	});
 
-	
+	const session = new Session("session")
+	session.createSession(User.name)
 	return redirect("/")
 }
 
@@ -74,6 +70,6 @@ export const signUp = async (formData) => {
 	});
 
 
-	return redirect("/")
+	return redirect("/sing-in")
 	
 }

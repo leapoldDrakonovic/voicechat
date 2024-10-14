@@ -3,15 +3,15 @@
 import Footer from "@/components/footer";
 import { Modal } from "@/components/modal";
 import { Button } from "@/components/ui/buttons";
+import { Input } from "@/components/ui/input";
 import { ServerUsersList } from "@/components/user";
 import { useState } from "react";
 
 const ServersList = () => {
   return (
     <>
-    <h4 className="text-center mb-2">My servers</h4>
-    <ul className="flex flex-row gap-5 h-full w-full flex-wrap">
-      {Array.from({ length: 3 }).map((el) => {
+    <ul className="flex flex-row gap-5 h-full w-full flex-wrap justify-around">
+      {Array.from({ length: 20 }).map((el) => {
         return (
           <li className="flex flex-col justify-center items-center">
             <div className="w-[50px] h-[50px] rounded-full border-2 bg-slate-500"></div>
@@ -42,7 +42,12 @@ export default function Home() {
 
       {/* Modal for search servers */}
       <Modal isOpen={openServersModal} onClose={handleCloseServersModal}>
-        Find server
+        <div className="w-full flex justify-center mt-4">
+          <Input />
+        </div>
+        <div className="w-full h-full justify-center mt-4 overflow-y-scroll">
+          <ServersList/>
+        </div>
       </Modal>
 
       {/* sidebar */}
@@ -60,6 +65,7 @@ export default function Home() {
               </Button>
             </li>
             <li>
+              <h4 className="text-center mb-2">My servers</h4>
               <ServersList/>
             </li>
           </ul>

@@ -1,14 +1,29 @@
 "use client"
 
-import { signUp } from "@/app/(auth)/actions/actions"
+import { signUp, signIn } from "@/app/(auth)/actions/actions"
 import { Input } from "@/components/ui/input"
 import { SubmitButton } from "@/components/ui/buttons"
-import { useState, useRef, useEffect } from "react"
+import { useState } from "react"
 
 export const LoginForm = (props) => {
 
+	
+	const [error, setError] = useState('');
+
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+		const formData = new FormData(event.target);
+
+		try {
+			await signIn(formData);
+		} catch (err) {
+			setError(err.message); 
+		}
+	};
+
+
 	return (
-		<form action="" className="border p-4 rounded-lg flex flex-col gap-4">
+		<form onSubmit={handleSubmit} className="border p-4 rounded-lg flex flex-col gap-4">
 			<div className="flex flex-col">
 				<label className="" htmlFor="username">Username</label>
 				<Input className="relative" type="text" name="username" required />
@@ -17,7 +32,8 @@ export const LoginForm = (props) => {
 				<label className="" htmlFor="password">Password</label>
 				<Input className="" type="password" name="password" length={5} required />
 			</div>
-			<SubmitButton>Sing In</SubmitButton>
+			{error && <p className="text-red-500">{error}</p>}
+			<SubmitButton type="submit">Sing In</SubmitButton>
 		</form>
 	)
 }

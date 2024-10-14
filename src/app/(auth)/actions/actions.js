@@ -5,7 +5,8 @@ import { cookies } from 'next/headers';
 import { redirect } from "next/navigation";
 
 export const signOut = async() => {
-
+	// todo
+	// clear session
 }
 
 
@@ -27,6 +28,9 @@ export const signIn = async (formData) => {
 		throw new Error('Incorrect Password');
 	}
 
+
+	// todo
+	// finish work with session 
 	const cookieStore = cookies();
 	cookieStore.set({
 		name: 'session',
@@ -37,7 +41,7 @@ export const signIn = async (formData) => {
 	});
 
 	
-	redirect("/")
+	return redirect("/")
 }
 
 
@@ -70,6 +74,6 @@ export const signUp = async (formData) => {
 	});
 
 
-	redirect("/")
+	return redirect("/")
 	
 }

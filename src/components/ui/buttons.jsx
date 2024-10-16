@@ -1,5 +1,3 @@
-const defaultClassNames = ""
-
 
 export const Button = ({children, ...props}) => {
     return (

@@ -13,9 +13,8 @@ export const signOut = async() => {
 }
 
 
-export const signIn = async (formData) => {
-	const username = formData.get("username")
-	const password = formData.get("password")
+export const signIn = async (username, password) => {
+
 
 	const User = await prisma.User.findFirst({
 		where: { name: username }

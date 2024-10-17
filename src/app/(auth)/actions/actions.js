@@ -2,14 +2,13 @@
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcrypt"
 import { cookies } from 'next/headers';
-import { redirect } from "next/navigation";
 import Session from "@/utils/session"
+import { NextResponse } from 'next/server';
 
 export const signOut = async() => {
 	const session = new Session("session")
 	session.clearSession()
 
-	return redirect('/sing-in')
 }
 
 
@@ -39,11 +38,11 @@ export const signIn = async ({username, password}) => {
 
 	const session = new Session("session")
 	session.createSession(user.name)
-	return redirect("/")
+	
 }
 
 
-export const signUp = async (username, password, confirmPassword) => {
+export const signUp = async ({username, password, confirmPassword}) => {
 
 
 	if (password !== confirmPassword) {
@@ -70,6 +69,7 @@ export const signUp = async (username, password, confirmPassword) => {
 	});
 
 
-	return redirect("/sing-in")
+
+	return NextResponse.redirect('http://localhost:3000/sing-in')
 	
 }

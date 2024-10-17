@@ -9,16 +9,19 @@ const Header = () => {
 	const [name, setName] = useState("")
 
 	useEffect(() => {
-
-		try {
-			const session = new Session("session")
-			const name1 = session.getName()
-			setName(name1)
-		} catch (error) {
-			
-		} 
+		// Получаем имя из API или другого источника
+		const fetchSessionData = async () => {
+		  try {
+			const res = await fetch("/api/auth/session"); 
+			const data = await res.json();
+			setName(data.name || "...");
+		  } catch (error) {
+			console.log(error);
+		  }
+		};
 	
-	}, []);
+		fetchSessionData();
+	  }, []);
 
 	
 
@@ -26,8 +29,7 @@ const Header = () => {
 		<header className="w-full h-[80px] flex items-center pl-2 pr-2 justify-end">
 			<div>
 				<div className="flex flex-row items-center justify-center gap-4">
-					<span>{name ? name : "..."}</span>
-					
+					<span>{name}</span>
 					<LogOutForm/>
 				</div>
 			</div>

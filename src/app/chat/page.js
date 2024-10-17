@@ -1,22 +1,52 @@
 "use client";
-
+import React from "react"
 import Footer from "@/components/footer";
 import { Modal } from "@/components/modal";
 import { Button } from "@/components/ui/buttons";
 import { Input } from "@/components/ui/input";
 import { ServerUsersList } from "@/components/user";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/header"
 import ServersList from "@/components/servers-list";
+import { useRouter } from "next/navigation";
+import {LoadingWindow} from "@/components/loader"
+import {CreateServerForm} from "@/components/forms"
 
+ const Chat = () => {
+  const router = useRouter()
 
-
-export default function Home() {
   const [openServersModal, setOpenServersModal] = useState(false);
   const [openCreateModal, setOpenCreateModal] = useState(false);
+  const [isSession, setIsSession] = useState(null)
 
   const handleCloseServersModal = () => setOpenServersModal(false);
   const handleCloseCreateModal = () => setOpenCreateModal(false);
+
+  useEffect(()=>{
+    const fetchSessionData = async () => {
+		  try {
+			const res = await fetch("/api/auth/session"); 
+      if(res.ok) {
+        setIsSession(true)
+      } else {
+        setIsSession(false)
+      }
+    } catch (error) {
+			console.log(error);
+		  } 
+		};
+	
+		fetchSessionData();
+  }, [])
+
+  if(isSession === null) {
+    return <LoadingWindow/>
+  }
+
+  if(!isSession) {
+    router.push("/sing-in")
+    return null
+  } 
 
   return (
     <>
@@ -25,7 +55,9 @@ export default function Home() {
       {/* Modal for create server */}
 
       <Modal isOpen={openCreateModal} onClose={handleCloseCreateModal}>
-        Create Server
+        <div className="flex items-center justify-center w-full h-1/2">
+          <CreateServerForm/>
+        </div>
       </Modal>
 
       {/* Modal for search servers */}
@@ -72,3 +104,5 @@ export default function Home() {
    
   );
 }
+
+export default Chat

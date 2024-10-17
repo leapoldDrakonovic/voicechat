@@ -6,13 +6,15 @@ import {NextResponse} from "next/server"
 export async function POST(req, res) {
   if (req.method === 'POST') {
     try {
-      const { username, password, confirmPassword } = req.body; 
-      console.log('API login called');
+      const body = await req.json()
+      const { username, password, confirmPassword } = body; 
+      console.log('API registration called');
       
 
-      await signUp( username, password, confirmPassword);
+      await signUp( {username, password, confirmPassword});
 
-      res.json("Sussecc").status(200)
+      return NextResponse.json({message: "Ok"}, {status: 200});
+      
     } catch (error) {
       console.log(error)
     }

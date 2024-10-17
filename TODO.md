@@ -32,5 +32,7 @@
 
 # Дебаг
 - [ ] Error: __webpack_modules__[moduleId] is not a function
+- [ ] Error: аксинхронщина в хэдэре и формах
+- [ ] Error: 404 по маршруту фетча к апишке
 
 # Рефакторинг

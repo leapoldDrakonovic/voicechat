@@ -3,7 +3,7 @@ import { Button } from "./ui/buttons";
 export const Modal = ({ children, isOpen, onClose, ...props }) => {
   return (
     <dialog
-      className="w-[400px] h-[400px] border bg-slate-400 rounded-lg shadow-2xl"
+      className="w-[400px] h-[400px] border bg-slate-400 rounded-lg shadow-2xl border-0"
       open={isOpen}
       {...props}
     >

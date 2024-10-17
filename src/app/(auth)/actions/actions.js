@@ -13,19 +13,22 @@ export const signOut = async() => {
 }
 
 
-export const signIn = async (username, password) => {
+export const signIn = async ({username, password}) => {
 
+	console.log(username, password)
 
-	const User = await prisma.User.findFirst({
+	const user = await prisma.User.findFirst({
 		where: { name: username }
 	})
 
 
-	if (!User) {
+	if (!user) {
 		throw new Error('User not found');
 	}
 
-	const isPasswordCorrect = await bcrypt.compare(password, User.password);
+	console.log(user.password)
+
+	const isPasswordCorrect = await bcrypt.compare(password, user.password);
 	if (!isPasswordCorrect) {
 		throw new Error('Incorrect Password');
 	}
@@ -35,15 +38,13 @@ export const signIn = async (username, password) => {
 	// finish work with session 
 
 	const session = new Session("session")
-	session.createSession(User.name)
+	session.createSession(user.name)
 	return redirect("/")
 }
 
 
-export const signUp = async (formData) => {
-	const username = formData.get("username")
-	const password = formData.get("password")
-	const confirmPassword = formData.get("confirm-password")
+export const signUp = async (username, password, confirmPassword) => {
+
 
 	if (password !== confirmPassword) {
 		throw new Error('Passwords do not match');

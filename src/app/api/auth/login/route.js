@@ -12,8 +12,9 @@ export async function POST(req) {
       
       console.log('API login called');
       console.log(username, password)
-      await signIn( {username, password});
+      const user = await signIn( {username, password});
 
+      console.log(user)
       return NextResponse.json({message: "Success"}, {status: 200});
     } catch (error) {
       console.log(error)

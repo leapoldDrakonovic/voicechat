@@ -199,10 +199,41 @@ export const LogOutForm = (props) => {
 
 export const CreateServerForm = () => {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null)
+
+  const handleCreateServer = async (event) => {
+    event.preventDefault()
+    const formData = new FormData(event.target)
+    const serverName = formData.get("server-name")
+
+    const DTO = {
+      serverName: serverName
+    }
+
+    try {
+      const responce = await fetch("/api/server/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(DTO),
+
+      })
+
+      if(!responce.ok) {
+        setError(responce)
+      }
+    } catch (e) {
+      setError(e.message)
+    }
+
+  }
 
   return (
-    <form className="flex flex-col p-4 gap-4">
-      <Input placeholder="Server Name"/>
+    <form onSubmit={handleCreateServer} className="flex flex-col p-4 gap-4">
+      <Input placeholder="Server Name" name="server-name" />
+      {error && <p className="text-red-500">{error}</p>}
+
       <SubmitButton type="submit" disabled={loading}>
         {loading ? "Creating" : "Create server"}
       </SubmitButton>

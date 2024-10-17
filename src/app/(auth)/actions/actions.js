@@ -25,7 +25,6 @@ export const signIn = async ({username, password}) => {
 		throw new Error('User not found');
 	}
 
-	console.log(user.password)
 
 	const isPasswordCorrect = await bcrypt.compare(password, user.password);
 	if (!isPasswordCorrect) {
@@ -33,11 +32,11 @@ export const signIn = async ({username, password}) => {
 	}
 
 
-	// todo
-	// finish work with session 
-
+	const encryptedSessionData =encrypt(user.id)
 	const session = new Session("session")
-	session.createSession(user.name)
+	session.createSession(encryptedSessionData)
+
+	return user
 	
 }
 
@@ -70,6 +69,6 @@ export const signUp = async ({username, password, confirmPassword}) => {
 
 
 
-	return NextResponse.redirect('http://localhost:3000/sing-in')
+	return newUser
 	
 }

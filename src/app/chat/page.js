@@ -11,33 +11,19 @@ import ServersList from "@/components/servers-list";
 import { useRouter } from "next/navigation";
 import {LoadingWindow} from "@/components/loader"
 import {CreateServerForm} from "@/components/forms"
+import useSession from "@/hooks/useSession"
 
  const Chat = () => {
   const router = useRouter()
 
   const [openServersModal, setOpenServersModal] = useState(false);
   const [openCreateModal, setOpenCreateModal] = useState(false);
-  const [isSession, setIsSession] = useState(null)
 
   const handleCloseServersModal = () => setOpenServersModal(false);
   const handleCloseCreateModal = () => setOpenCreateModal(false);
 
-  useEffect(()=>{
-    const fetchSessionData = async () => {
-		  try {
-			const res = await fetch("/api/auth/session"); 
-      if(res.ok) {
-        setIsSession(true)
-      } else {
-        setIsSession(false)
-      }
-    } catch (error) {
-			console.log(error);
-		  } 
-		};
-	
-		fetchSessionData();
-  }, [])
+  const {isSession} = useSession()
+  
 
   if(isSession === null) {
     return <LoadingWindow/>

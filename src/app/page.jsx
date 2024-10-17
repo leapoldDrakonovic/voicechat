@@ -4,28 +4,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import {LoadingWindow} from "@/components/loader"
+import useSession from "@/hooks/useSession"
 
 export default function Home() {
   const router = useRouter();
-  const [isSession, setIsSession] = useState(null);
 
 
-  useEffect(() => {
-    const fetchSessionData = async () => {
-      try {
-        const res = await fetch("/api/auth/session");
-        if (res.ok) {
-          setIsSession(true);
-        } else {
-          setIsSession(false);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchSessionData();
-  }, []);
+  const {isSession} = useSession()
 
   if (isSession === null) {
     return <LoadingWindow />

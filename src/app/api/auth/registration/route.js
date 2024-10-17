@@ -11,9 +11,10 @@ export async function POST(req, res) {
       console.log('API registration called');
       
 
-      await signUp( {username, password, confirmPassword});
+      const newUser = await signUp( {username, password, confirmPassword});
 
-      return NextResponse.json({message: "Ok"}, {status: 200});
+      console.log(newUser)
+      return NextResponse.json(newUser, {status: 200});
       
     } catch (error) {
       console.log(error)

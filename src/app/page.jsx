@@ -31,8 +31,8 @@ export default function Home() {
         <p>To contionue you have to registration or login</p>
       </div>
       <div className="flex flex-row gap-4">
-        <Link href={"/sing-in"}>Sing in</Link>
-        <Link href={"/sing-up"}>Sing in</Link>
+        <Link href={"/sing-in"} className="border p-3">Sing in</Link>
+        <Link href={"/sing-up"} className="border p-3">Sing up</Link>
       </div>
     </div>
   );

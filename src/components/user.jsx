@@ -26,7 +26,7 @@ export const ServerUsersList = () => {
         <ul className="flex flex-col gap-4">
           {/* user element */}
           
-            {Array.from({length: 30}).map(el => {
+            {Array.from({length: 2}).map(el => {
                 return (
                     <UserElement key={el}/>
                 )

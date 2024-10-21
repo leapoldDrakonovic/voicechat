@@ -14,9 +14,9 @@ export async function POST(req, res) {
 				res.json({message: "Server name doesnt exist"}).status(500)
 			}
 
-			await createServer({serverName});
+			const newServer = await createServer({serverName});
 
-			return NextResponse.json({ message: "Success" }, { status: 200 });
+			return NextResponse.json({newServer}, { status: 200 });
 		} catch (error) {
 			console.log(error)
 		}

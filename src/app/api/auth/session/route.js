@@ -12,7 +12,7 @@ export async function GET() {
       return NextResponse.json({ message: "No session" }, { status: 401 });
     }
 
-    return NextResponse.json({ name: session.value });
+    return NextResponse.json({ id: session.value });
   } catch (error) {
     return NextResponse.json({ error: "Failed to get session" }, { status: 500 });
   }

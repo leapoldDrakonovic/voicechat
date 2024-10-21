@@ -12,8 +12,9 @@ const Header = () => {
 		// Получаем имя из API или другого источника
 		const fetchSessionData = async () => {
 		  try {
-			const res = await fetch("/api/auth/session"); 
+			const res = await fetch("/api/user/getUser"); 
 			const data = await res.json();
+			console.log(data.name);
 			setName(data.name || "...");
 		  } catch (error) {
 			console.log(error);
@@ -26,7 +27,7 @@ const Header = () => {
 	
 
 	return (
-		<header className="w-full h-[80px] flex items-center pl-2 pr-2 justify-end">
+		<header className="w-full h-[80px] flex items-center pl-2 pr-2 justify-end absolute">
 			<div>
 				<div className="flex flex-row items-center justify-center gap-4">
 					<span>{name}</span>

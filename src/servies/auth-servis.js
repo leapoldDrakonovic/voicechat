@@ -5,6 +5,19 @@ import { cookies } from 'next/headers';
 import Session from "@/utils/session"
 import { NextResponse } from 'next/server';
 
+
+export default class AuthServis {
+
+    async signOut()  {
+        const session = new Session("session")
+        session.clearSession()
+    
+    }
+
+    
+}
+
+
 export const signOut = async() => {
 	const session = new Session("session")
 	session.clearSession()

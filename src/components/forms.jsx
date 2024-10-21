@@ -111,6 +111,8 @@ export const RegistrationForm = (props) => {
 
       if (response.ok) {
         const result = await response.json();
+        router.push("/sing-in");
+
         console.log(result);
       } else {
         const error = await response.json();
@@ -223,6 +225,8 @@ export const CreateServerForm = () => {
       if(!responce.ok) {
         setError(responce)
       }
+
+      window.location.reload()
     } catch (e) {
       setError(e.message)
     }

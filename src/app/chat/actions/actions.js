@@ -5,9 +5,11 @@ import Session from "@/utils/session"
 export const createServer = async ({ serverName }) => {
 
 	const session = new Session("session")
-	const userName = session.getName()
 
-	console.log(userName)
+    const userId = parseInt(cookies().get("session").value);
+	
+	
+	console.log(userId)
 	const existServer = await prisma.Server.findFirst({
 		where: { name: serverName }
 	})
@@ -18,19 +20,11 @@ export const createServer = async ({ serverName }) => {
 
 
 
-	const user = await prisma.User.findFirst({
-		where: { name: userName }
-	})
-
-	if (!user) {
-		throw new Error("User not found")
-	}
-
 	const newServer = await prisma.Server.create({
 		data: {
 			name: serverName,
 			owner: {
-				connect: { id: user.id }
+				connect: { id: userId }
 			}
 		}
 	})
@@ -43,27 +37,30 @@ export const createServer = async ({ serverName }) => {
 
 export async function getUserServers () {
 	const session = new Session("session")
-	const userName = session.getName()
-	console.log(userName)
+    const userId = parseInt(cookies().get("session").value);
+
+	if (isNaN(userId)) {
+		throw new Error("Invalid userId");
+	  }
 
 
 
-	const user = await prisma.User.findFirst({
-		where: {name: userName}
-	})
-
-	console.log(user)
+  console.log(`User ID: ${userId}`);
 
 	const servers = await prisma.Server.findMany({
 		where: {
-			ownerId: user.id
+			ownerId: userId
 		}
 	})
 
+
 	console.log(servers)
-	if(!servers) {
-		return 
-	}
+
+	if (!servers || servers.length === 0) {
+		return [];
+	  }
+
+
 
 	return servers
 }

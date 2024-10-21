@@ -21,10 +21,10 @@ class Session {
     }
   }
 
-  async getName() {
+  async getSessionData() {
     try {
-       const name = cookies().get(this.cookieName);
-      return name ? name.value : null;
+       const sessionData = parseInt(cookies().get(this.cookieName).value);
+      return sessionData ? sessionData : null;
     } catch (e) {
       // statements
       console.log(e);
